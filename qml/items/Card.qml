@@ -391,6 +391,11 @@ FreeCellItem {
             coordX = coordX + root.x
             coordY = coordY + root.y
         }
+        if (root.name === "playfield") {
+            coordX = coordX - root.x
+            coordY = coordY - root.y
+        }
+
         var retval = {item : root, x : coordX, y : coordY};
         return retval
     }

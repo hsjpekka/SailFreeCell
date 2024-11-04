@@ -38,8 +38,8 @@ Page {
     allowedOrientations: Orientation.Portrait|Orientation.Landscape
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
-    SilicaFlickable {
-        anchors.fill: parent
+    //SilicaFlickable {
+    //    anchors.fill: parent
 
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
 //        PullDownMenu {
@@ -50,36 +50,40 @@ Page {
 //        }
 
         // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
+    //    contentHeight: column.height
 
         // Place our content in a Column.  The PageHeader is always placed at the top
         // of the page, followed by our content.
-        Rectangle {
-             y: 0
-            id: column
+        //Rectangle {
+        //     y: 0
+        //    id: column
 
-            width: page.width
+        //    width: parent.width
+        //    height: buttonarea.height + field.height
 
             Rectangle
             {
-                id: rect
-                y: deviceOrientation === Orientation.Portrait ? 12 : 0
-                x: deviceOrientation === Orientation.Portrait ? 0 : 12
-                width: deviceOrientation === Orientation.Portrait ? page.width : 80 * Theme.pixelRatio
-                anchors.left: deviceOrientation === Orientation.Portrait ? column.left : undefined
-                height: deviceOrientation === Orientation.Portrait ? 60 * Theme.pixelRatio : page.height
+                id: buttonarea
+                y: 0 //deviceOrientation === Orientation.Portrait ? Theme.paddingLarge : 0 // 12
+                x: 0 //deviceOrientation === Orientation.Portrait ? 0 : Theme.paddingLarge // 12
+                width: deviceOrientation === Orientation.Portrait ? parent.width : 0.12*parent.width //80 * Theme.pixelRatio
+                //anchors.left: deviceOrientation === Orientation.Portrait ? column.left : undefined
+                height: deviceOrientation === Orientation.Portrait ? Theme.itemSizeSmall : page.height //60 * Theme.pixelRatio : page.height
                 color : "transparent"
                 //border.color: "white"
                 //border.width: 1
+
                 Button
                 {
                     id: undoMove
-                    anchors.left: deviceOrientation === Orientation.Portrait ? rect.left : rect.left
-                    width:  deviceOrientation === Orientation.Portrait ? rect.width / 2 : rect.width
-                    height: deviceOrientation === Orientation.Portrait ? rect.height : rect.height / 2
+                    x: 0
+                    //anchors.left: deviceOrientation === Orientation.Portrait ? buttonarea.left : buttonarea.left
+                    width:  deviceOrientation === Orientation.Portrait ? buttonarea.width / 2 : buttonarea.width
+                    height: deviceOrientation === Orientation.Portrait ? buttonarea.height : buttonarea.height / 2
                     text : "Undo"
-                    anchors.top: deviceOrientation === Orientation.Portrait ? rect.top : undefined
-                    anchors.bottom: deviceOrientation === Orientation.Portrait ? undefined : rect.bottom
+                    y: 0
+                    //anchors.top: deviceOrientation === Orientation.Portrait ? buttonarea.top : undefined
+                    //anchors.bottom: deviceOrientation === Orientation.Portrait ? undefined : buttonarea.bottom
                     //rotation : deviceOrientation === Orientation.Portrait ? 0 : -90
                     onClicked:
                     {
@@ -89,11 +93,12 @@ Page {
                 Button
                 {
                     id: newGame
-                    width:  deviceOrientation === Orientation.Portrait ? rect.width / 2 : rect.width
-                    height: deviceOrientation === Orientation.Portrait ? rect.height : rect.height / 2
-                    y: deviceOrientation === Orientation.Portrait ? 0 : rect.height
-                    anchors.top: deviceOrientation === Orientation.Portrait ? rect.top : rect.top
-                    anchors.right: deviceOrientation === Orientation.Portrait ? rect.right : rect.right
+                    width:  deviceOrientation === Orientation.Portrait ? buttonarea.width / 2 : buttonarea.width
+                    height: deviceOrientation === Orientation.Portrait ? buttonarea.height : buttonarea.height / 2
+                    x: deviceOrientation === Orientation.Portrait ? undoMove.width : 0
+                    y: deviceOrientation === Orientation.Portrait ? 0 : undoMove.height //buttonarea.height
+                    //anchors.top: deviceOrientation === Orientation.Portrait ? buttonarea.top : buttonarea.top
+                    //anchors.right: deviceOrientation === Orientation.Portrait ? buttonarea.right : buttonarea.right
 
                     text : deviceOrientation === Orientation.Portrait ? "New Game" : " New\nGame"
                     //rotation : deviceOrientation === Orientation.Portrait ? 0 : -90
@@ -113,11 +118,13 @@ Page {
             PlayField
             {
                 id: field
-                y: deviceOrientation === Orientation.Portrait ? rect.height + 20 : 0
-                x: deviceOrientation === Orientation.Portrait ? 0 : (rect.height <= 540 ? 0 : newGame.width) // jolla phone special
+                width: deviceOrientation === Orientation.Portrait ? parent.width : parent.width - buttonarea.width
+                y: deviceOrientation === Orientation.Portrait ? buttonarea.height : 0 // + 20 : 0
+                x: deviceOrientation === Orientation.Portrait ? 0 : buttonarea.width
+                property string name: "playfield"
             }
-        }
-    }
+      //  }
+    //}
 }
 
 

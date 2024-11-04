@@ -8,22 +8,24 @@ Item {
     height: parent.height // 400 * Theme.pixelRatio
     property bool canAutoMove : false
     property string type: "playfield"
-    property int smallGap: 2 * Theme.pixelRatio
-    property int bigGap: 4 * Theme.pixelRatio
+    property int fieldWidth: deviceOrientation === Orientation.Portrait ? width : 0.76*width
+    property int stacksWidth : width - fieldWidth
+    property int smallGap: (fieldWidth - 8*cell1.width)/11 //2 * Theme.pixelRatio
+    property int bigGap: 3*smallGap//4 * Theme.pixelRatio
     property int cellGap: 20 * Theme.pixelRatio
-    property int landCellsX : 570 * Theme.pixelRatio
-    property int landCellsY : 12 * Theme.pixelRatio //140
-    property int landFieldsY : 12
-    property int landFieldsX : 112
-    property int portCellsX : 0.025 * width
-    property int portCellsY : 2 * Theme.pixelRatio
+    property int landCellsX : fieldWidth + 0.5*(stacksWidth - 2*cell1.width - bigGap) // 570 * Theme.pixelRatio
+    property int landCellsY : Theme.horizontalPageMargin //12 * Theme.pixelRatio //140
+    property int landFieldsX : (fieldWidth - 8*field1.width - 7*smallGap)/2
+    property int landFieldsY : Theme.horizontalPageMargin // 12
+    property int portCellsX : smallGap //0.025 * width
+    property int portCellsY : Theme.paddingSmall //2 * Theme.pixelRatio
     property var selectedCard : null
     property var db
 
     SingleCell {
         id: cell1
         stack: 0
-        x: deviceOrientation === Orientation.Portrait ? portCellsX : field8.x + field8.width + 60
+        x: deviceOrientation === Orientation.Portrait ? portCellsX : landCellsX
         y: deviceOrientation === Orientation.Portrait ? portCellsY  : landCellsY
     }
 
@@ -51,7 +53,7 @@ Item {
         stack: 0
         acceptedSuits:[1]
         suitChar: "\u2660"
-        x: deviceOrientation === Orientation.Portrait ? cell4.x + cell4.width + bigGap/*270*/ :  cell4.x + cell4.width + bigGap
+        x: deviceOrientation === Orientation.Portrait ? cell4.x + cell4.width + bigGap/*270*/ :  cell1.x + cell1.width + bigGap
         y: deviceOrientation === Orientation.Portrait ? portCellsY : landCellsY
     }
 
@@ -83,7 +85,7 @@ Item {
     FieldCell {
         id: field1
         stack: 0
-        x: deviceOrientation === Orientation.Portrait ? portCellsX : landFieldsX
+        x: deviceOrientation === Orientation.Portrait ? portCellsX + smallGap : landFieldsX
         y: deviceOrientation === Orientation.Portrait ? suit4.y + suit4.height + cellGap : landFieldsY/*120*/
     }
 

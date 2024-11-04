@@ -8,6 +8,8 @@
 #         - icon definition filename in desktop file must be changed
 TARGET = harbour-sailfreecell
 
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
+
 CONFIG += sailfishapp
 
 SOURCES += src/SailFreeCell.cpp \

@@ -5,3 +5,7 @@ Name=Sail Free Cell
 Icon=harbour-sailfreecell
 Exec=harbour-sailfreecell
 
+[X-Sailjail]
+Permissions=
+OrganizationName=null.munkki84
+ApplicationName=harbour-sailfreecell
